@@ -5,14 +5,13 @@ import _ from 'underscore'
 import { setUser } from '../../actions/setUser'
 
 const Landing = ({ loggedInUser, firebaseLogin }) => {
-
     return (
         <section>
            <h1>Poker</h1>
             {_.isEmpty(loggedInUser) ? (
                 <button onClick={() => firebaseLogin()}>Gotta log in</button>
             ) : (
-                <button onClick={() => startRoom()}>Start a game</button>
+                <button onClick={() => startRoom(loggedInUser)}>Start a game</button>
             )}
             
         </section>

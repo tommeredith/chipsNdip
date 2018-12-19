@@ -20,7 +20,7 @@ export const setUserSuccess = user => ({
 })
 
 export const setUser = () => {
-
+    
     var config = {
         apiKey: "AIzaSyDfl00A6MzezaleFKsqr5U8D_pyjY8lqqo",
         authDomain: "chips-n-dip.firebaseapp.com",
