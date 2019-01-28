@@ -1,19 +1,39 @@
-import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import React from 'react'
+import { connect } from 'react-redux'
+import { HashRouter as Router, Route } from "react-router-dom";
 import Landing from './Landing'
-import Room from './Room'
+import Home from './Home'
 
 const RouteWrap = () => {
-    return(
+
+    return (
         <Router>
             <main>
-                <Route exact path="/" component={Landing} />
-
-                <Route path="/room/:id" component={Room} />
+                <header>
+                    <h1>
+                        Swamp THAAAANG
+                    </h1>
+                </header>
+                <Route exact path="/" render={() => (
+                    // authedUser || storedUser ? (
+                    //     <Home />
+                    // ) : (
+                        // <Landing />
+                        <Home />
+                    // )
+                )} />
+               
             </main>
         </Router>
     )
-    
 }
 
-export default RouteWrap;
+const mapStateToProps = state => ({
+
+})
+
+const mapDispatchToProps = dispatch => ({
+    
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(RouteWrap)
