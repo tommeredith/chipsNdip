@@ -1,20 +1,25 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { fetchTables } from '../../actions/fetchTables'
+import { createTable } from '../../actions/createTable'
 
-const Home = ({ fetchAllTables, allTables }) => {
+const Home = ({ fetchAllTables, allTables, createTable }) => {
+    const [newTableInputValue, setTableInputValue] = useState('')
 
     const tableMap = allTables.map(table => {
         return (
             <li>
-                {table.title}
+                <Link to={`/table/${table._id}`}>{table.title}</Link>
             </li>
         )
     })
     return (
         <div>
             <p>create new table:</p>
-            <button>here</button>
+            <input onChange={(e) => setTableInputValue(e.target.value)} type="text"/>
+            <button onClick={() => createTable(newTableInputValue)}>here</button>
+            
             
             <p>list all tables: </p>
             <button onClick={() => fetchAllTables()}>here</button>
@@ -31,7 +36,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    fetchAllTables: () => dispatch(fetchTables())
+    fetchAllTables: () => dispatch(fetchTables()),
+    createTable: tableInput => dispatch(createTable(tableInput))
 })
  
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

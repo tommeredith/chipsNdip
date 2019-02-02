@@ -10,6 +10,12 @@ const create = (req, res) => {
         })
     }
 
+    if ( !req.body.title ) {
+        return res.status(400).send({
+            message: "table title can't be empty"
+        })
+    }
+
     // create a table
     const table = new Table({
         title: req.body.title || "you aint name this table",
@@ -22,7 +28,7 @@ const create = (req, res) => {
         })
         .catch(err => {
             res.status(500).send({
-                message: err.message || "some shit went down creating the table"
+                message: "some shit went down saving the table: " + err.message 
             })
         })
 }
@@ -35,7 +41,7 @@ const findAll = (req, res) => {
         })
         .catch(err => {
             res.status(500).send({
-                message: err.message || "some shit wen down grabbing all tables"
+                message: "some shit went down grabbing all tables: " + err.message
             })
         })
 }
@@ -73,7 +79,6 @@ const update = (req, res) => {
     }
 
     Table.findByIdAndUpdate(req.params.tableId, {
-        title: req.body.title || "you aint name this table AGAIN",
         deck: req.body.deck
     }, {
         new: true

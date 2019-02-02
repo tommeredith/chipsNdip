@@ -4,7 +4,7 @@ const TableSchema = mongoose.Schema({
     title: String,
     deck: [{
         suit: String,
-        rank: Number    
+        rank: String    
     }]
 }, {
     timestamps: true

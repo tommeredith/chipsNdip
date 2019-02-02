@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { HashRouter as Router, Route } from "react-router-dom";
 import Landing from './Landing'
 import Home from './Home'
+import Table from './Table'
 
 const RouteWrap = () => {
 
@@ -22,6 +23,8 @@ const RouteWrap = () => {
                         <Home />
                     // )
                 )} />
+
+                <Route exact path="/table/:tableId" component={Table} />
                
             </main>
         </Router>
