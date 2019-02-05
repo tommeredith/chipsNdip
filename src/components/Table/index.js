@@ -11,7 +11,7 @@ const lifecycleMethods = {
 }
 
 const Table = ({ singleTable, shuffleAndDeal }) => {
-    const { _id, deck } = singleTable
+    const { _id, deck, users } = singleTable
     
     return (
         <section>
@@ -19,8 +19,8 @@ const Table = ({ singleTable, shuffleAndDeal }) => {
 
             <button onClick={() => shuffleAndDeal(_id, deck)}>shuffle and deal</button>
 
-            {deck && deck.map(card => (
-                <p>{card.rank} of {card.suit}</p>
+            {users && users.map(user => (
+                <p>{user.name}</p>
             ))}
         </section>
     )

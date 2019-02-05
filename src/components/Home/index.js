@@ -6,6 +6,7 @@ import { createTable } from '../../actions/createTable'
 
 const Home = ({ fetchAllTables, allTables, createTable }) => {
     const [newTableInputValue, setTableInputValue] = useState('')
+    const [newTableUsers, setNewTableUsers] = useState('1')
 
     const tableMap = allTables.map(table => {
         return (
@@ -18,7 +19,13 @@ const Home = ({ fetchAllTables, allTables, createTable }) => {
         <div>
             <p>create new table:</p>
             <input onChange={(e) => setTableInputValue(e.target.value)} type="text"/>
-            <button onClick={() => createTable(newTableInputValue)}>here</button>
+            <p># of robot users</p>
+            <select onChange={(e) => setNewTableUsers(e.target.value)}>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+            </select>
+            <button onClick={() => createTable(newTableInputValue, newTableUsers)}>here</button>
             
             
             <p>list all tables: </p>
@@ -37,7 +44,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     fetchAllTables: () => dispatch(fetchTables()),
-    createTable: tableInput => dispatch(createTable(tableInput))
+    createTable: (tableInput, robotUsers) => dispatch(createTable(tableInput, robotUsers))
 })
  
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

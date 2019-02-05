@@ -1,12 +1,21 @@
-const Table = require('../models/table.model.js')
+const TableModel = require('../models/table.model.js')
+
+const Table = TableModel.Table
+const UserInTable = TableModel.UserInTable
 
 // create and save new table
 const create = (req, res) => {
-
+    
     // validate
     if ( !req.body.deck ) {
         return res.status(400).send({
             message: "table deck can't be empty"
+        })
+    }
+
+    if ( req.body.users.length == 0 ) {
+        return res.status(400).send({
+            message: "need starting users"
         })
     }
 
@@ -16,10 +25,25 @@ const create = (req, res) => {
         })
     }
 
+    // const modeledUsers = []
+    
+    // req.body.users.map(user => {
+
+    //     const modeledUser = new UserInTable({
+    //         name: user.name,
+    //         userId: user.userId
+    //     })
+
+    //     modeledUsers.push(modeledUser)
+    // })
+
+    // console.log('modeledUsers', modeledUsers)
+
     // create a table
     const table = new Table({
         title: req.body.title || "you aint name this table",
-        deck: req.body.deck
+        deck: req.body.deck,
+        users: req.body.users
     })
 
     table.save()
