@@ -16,6 +16,7 @@ module.exports = app => {
     // update a user deck with userId
     app.put('/users/:userId/hand', users.updateHand)
 
+    app.post('/users/login', users.login)
     // // delete a user with userId
     // app.delete('/users/:userId', users.deleteuser)
 }

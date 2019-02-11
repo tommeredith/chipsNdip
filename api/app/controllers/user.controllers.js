@@ -2,11 +2,6 @@ const User = require('../models/user.model.js')
 
 const create = (req, res) => {
     // validate
-    if ( !req.body.name ) {
-        return res.status(400).send({
-            message: "user name can't be empty"
-        })
-    }
 
     if ( !req.body.email ) {
         return res.status(400).send({
@@ -14,11 +9,16 @@ const create = (req, res) => {
         })
     }
 
+    if ( !req.body.password ) {
+        return res.status(400).send({
+            message: "user password can't be empty"
+        })
+    }
+
     // create a table
     const user = new User({
-        name: req.body.name,
         email: req.body.email,
-        hand: []
+        password: req.body.password
     })
 
     user.save()
@@ -69,13 +69,35 @@ const findAll = (req, res) => {
         })
 }
 
+const login = (req, res) => {
+    User.findOne({
+        email: req.body.email
+    })
+    .then(user => {
+
+        if (!user) {
+            return res.status(400).send({
+                message: "couldnt find user with that email"
+            })
+        }
+
+        if ( user.password == req.body.password ) {
+            res.send(user)
+        } else {
+            res.status(404).send({
+                message: "password aint right"
+            })
+        }
+    })
+    .catch(err => {
+        res.status(404).send({
+            message: "problem finding user with that email: " + err.message
+        })
+    })
+}
+
 const update = (req, res) => {
     // validate
-    if ( !req.body.name ) {
-        return res.status(400).send({
-            message: "user name can't be empty"
-        })
-    }
 
     if ( !req.body.email ) {
         return res.status(400).send({
@@ -84,8 +106,8 @@ const update = (req, res) => {
     }
 
     User.findByIdAndUpdate(req.params.userId, {
-        name: req.body.name,
-        email: req.body.email
+        email: req.body.email,
+        password: req.body.password
     }, {
         new: true
     })
@@ -151,5 +173,6 @@ module.exports = {
     findOne,
     update,
     updateHand,
-    findAll
+    findAll,
+    login
 }
