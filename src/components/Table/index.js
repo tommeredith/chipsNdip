@@ -3,6 +3,7 @@ import lifecycle from 'react-pure-lifecycle'
 import { connect } from 'react-redux'
 import { fetchTableById } from '../../actions/fetchTableById'
 import { shuffleAndDeal } from '../../actions/shuffleAndDeal'
+import { deleteTable } from '../../actions/deleteTable';
 
 const lifecycleMethods = {
     componentWillMount({ match, grabSingleTable }){
@@ -10,7 +11,7 @@ const lifecycleMethods = {
     }
 }
 
-const Table = ({ singleTable, shuffleAndDeal }) => {
+const Table = ({ singleTable, shuffleAndDeal, deleteTable }) => {
     const { _id, deck, users } = singleTable
     
     return (
@@ -22,13 +23,15 @@ const Table = ({ singleTable, shuffleAndDeal }) => {
             {users && users.map(user => (
                 <p>{user.name}</p>
             ))}
+            <button onClick={() => deleteTable(_id)}>delete table</button>
         </section>
     )
 }
 
 const mapDispatchToProps = dispatch => ({
     grabSingleTable: tableId => dispatch(fetchTableById(tableId)),
-    shuffleAndDeal: (tableId, deck) => dispatch(shuffleAndDeal(tableId, deck))
+    shuffleAndDeal: (tableId, deck) => dispatch(shuffleAndDeal(tableId, deck)),
+    deleteTable: tableId => dispatch(deleteTable(tableId))
 })
 
 const mapStateToProps = state => ({
