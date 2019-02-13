@@ -25,25 +25,18 @@ const create = (req, res) => {
         })
     }
 
-    // const modeledUsers = []
-    
-    // req.body.users.map(user => {
-
-    //     const modeledUser = new UserInTable({
-    //         name: user.name,
-    //         userId: user.userId
-    //     })
-
-    //     modeledUsers.push(modeledUser)
-    // })
-
-    // console.log('modeledUsers', modeledUsers)
+    if ( !req.body.seats ) {
+        return res.status(400).send({
+            message: "table needs seat, homie"
+        })
+    }
 
     // create a table
     const table = new Table({
         title: req.body.title || "you aint name this table",
         deck: req.body.deck,
-        users: req.body.users
+        seats: req.body.seats,
+        users: [req.body.users[0]]
     })
 
     table.save()

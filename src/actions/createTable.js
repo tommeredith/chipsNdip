@@ -56,19 +56,11 @@ const createTableSuccess = table => ({
     payload: { table }
 })
 
-export const createTable = (tableName, users) => {
+export const createTable = (tableName, tableSeats, user) => {
     const deck = buildDeck()
     let usersArr = []
 
-    for (let i = 0; i < users; i++) {
-
-        const testUser = {
-            name: 'Pascal Siakam: ' + i,
-            userId: i + 1
-        }
-
-        usersArr.push(testUser)
-    }
+    usersArr.push(user)
 
     return dispatch => {
         dispatch(createTableRequest())
@@ -76,7 +68,8 @@ export const createTable = (tableName, users) => {
         axios.post('http://localhost:1234/tables', { 
                 "title": tableName,
                 "deck": deck,
-                "users": usersArr
+                "users": usersArr,
+                "seats": tableSeats
             })
             .then(table => {
                 dispatch(createTableSuccess(table))

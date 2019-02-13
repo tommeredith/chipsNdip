@@ -4,9 +4,9 @@ import { connect } from 'react-redux'
 import { fetchTables } from '../../actions/fetchTables'
 import { createTable } from '../../actions/createTable'
 
-const Home = ({ fetchAllTables, allTables, createTable }) => {
+const Home = ({ fetchAllTables, allTables, createTable, authedUser }) => {
     const [newTableInputValue, setTableInputValue] = useState('')
-    const [newTableUsers, setNewTableUsers] = useState('1')
+    const [newTableSeats, setNewTableSeats] = useState('2')
 
     const tableMap = allTables.map(table => {
         return (
@@ -19,13 +19,13 @@ const Home = ({ fetchAllTables, allTables, createTable }) => {
         <div>
             <p>create new table:</p>
             <input onChange={(e) => setTableInputValue(e.target.value)} type="text"/>
-            <p># of robot users</p>
-            <select onChange={(e) => setNewTableUsers(e.target.value)}>
-                <option value="1">1</option>
+            <p># of seats</p>
+            <select onChange={(e) => setNewTableSeats(e.target.value)}>
                 <option value="2">2</option>
                 <option value="3">3</option>
+                <option value="4">4</option>
             </select>
-            <button onClick={() => createTable(newTableInputValue, newTableUsers)}>here</button>
+            <button onClick={() => createTable(newTableInputValue, newTableSeats, authedUser)}>here</button>
             
             
             <p>list all tables: </p>
@@ -39,12 +39,13 @@ const Home = ({ fetchAllTables, allTables, createTable }) => {
 }
 
 const mapStateToProps = state => ({
-    allTables: state.tables.tables
+    allTables: state.tables.tables,
+    authedUser: state.user.user.data
 })
 
 const mapDispatchToProps = dispatch => ({
     fetchAllTables: () => dispatch(fetchTables()),
-    createTable: (tableInput, robotUsers) => dispatch(createTable(tableInput, robotUsers))
+    createTable: (tableInput, tableSeats, currentUser) => dispatch(createTable(tableInput, tableSeats, currentUser))
 })
  
 export default connect(mapStateToProps, mapDispatchToProps)(Home)
