@@ -40,7 +40,7 @@ const Home = ({ fetchAllTables, allTables, createTable, authedUser }) => {
 
 const mapStateToProps = state => ({
     allTables: state.tables.tables,
-    authedUser: state.user.user.data
+    authedUser: state.user.user
 })
 
 const mapDispatchToProps = dispatch => ({

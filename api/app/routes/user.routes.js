@@ -17,6 +17,10 @@ module.exports = app => {
     app.put('/users/:userId/hand', users.updateHand)
 
     app.post('/users/login', users.login)
-    // // delete a user with userId
-    // app.delete('/users/:userId', users.deleteuser)
+    
+    // delete a user with userId
+    app.delete('/users/:userId', users.deleteUser)
+
+    // update user associatedTables
+    app.put('/users/:userId/updateAssociatedTable', users.updateAssociatedTable)
 }

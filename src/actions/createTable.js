@@ -1,4 +1,6 @@
 import axios from 'axios'
+import { updateUserAssociatedTables } from './updateUserAssociatedTables'
+
 
 export const CREATE_TABLE_REQUEST = "CREATE_TABLE_REQUEST"
 export const CREATE_TABLE_SUCCESS = "CREATE_TABLE_SUCCESS"
@@ -59,7 +61,6 @@ const createTableSuccess = table => ({
 export const createTable = (tableName, tableSeats, user) => {
     const deck = buildDeck()
     let usersArr = []
-
     usersArr.push(user)
 
     return dispatch => {
@@ -73,6 +74,7 @@ export const createTable = (tableName, tableSeats, user) => {
             })
             .then(table => {
                 dispatch(createTableSuccess(table))
+                dispatch(updateUserAssociatedTables(user._id, table.data._id))
             })
             .catch(error => {
                 dispatch(createTableFailure(error))

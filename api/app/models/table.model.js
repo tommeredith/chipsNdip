@@ -12,6 +12,7 @@ const TableSchema = mongoose.Schema({
         {
             email: String,
             password: String,
+            isFake: {type: Boolean, default: false},
             _id: String
         }
     ]

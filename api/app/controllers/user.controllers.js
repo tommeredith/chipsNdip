@@ -15,10 +15,11 @@ const create = (req, res) => {
         })
     }
 
-    // create a table
+    // create a user
     const user = new User({
         email: req.body.email,
-        password: req.body.password
+        password: req.body.password,
+        associatedTables: []
     })
 
     user.save()
@@ -32,7 +33,7 @@ const create = (req, res) => {
         })
 }
 
-// grab a single table with tableId
+// grab a single user with userId
 const findOne = (req, res) => {
     User.findById(req.params.userId)
         .then(user => {
@@ -168,11 +169,66 @@ const updateHand = (req, res) => {
 
 }
 
+// delete user based on userId
+const deleteUser = (req, res) => {
+    User.findByIdAndDelete(req.params.userId)
+        .then(user => {
+            if(!user) {
+                return res.status(404).send({
+                    message: "couldnt find user with id: " + req.params.userId
+                })
+            }
+
+            res.send({ message: "nice, got rid of that user" })
+        })
+        .catch(err => {
+            if ( err.kind == 'ObjectId' || err.name == "NotFound" ) {
+                return res.status(404).send({
+                    message: "couldnt find user with id: " + req.params.userId
+                })
+            }
+
+            return res.status(500).send({
+                message: "fucked up deleting user with id: " + req.params.userId
+            })
+        })
+}
+
+// update associatedTables by userId
+const updateAssociatedTable = (req, res) => {
+    User.findByIdAndUpdate(req.params.userId, {
+        $push: { associatedTables: req.body.tableId }
+    }, {
+        new: true
+    })
+    .then(user => {
+        if ( !user ) {
+            return res.status(404).send({
+                message: "couldnt find user with id: " + req.params.userId
+            })
+        }
+        res.send(user)
+    })
+    .catch(err => {
+        if( err.kind == 'ObjectId' ) {
+            return res.status(404).send({
+                message: "couldnt find user with id: " + req.params.userId
+            })
+        }
+
+        return res.status(500).send({
+            message: err.message || "fucked up updating user with id: " + req.params.userId
+        })
+    })
+}
+
 module.exports = {
     create,
     findOne,
     update,
     updateHand,
     findAll,
-    login
+    login,
+    deleteUser,
+    updateAssociatedTable
 }

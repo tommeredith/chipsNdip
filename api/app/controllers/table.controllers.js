@@ -31,12 +31,23 @@ const create = (req, res) => {
         })
     }
 
+    let totalUsers = req.body.users
+
+    for (let i = 0; i < req.body.seats - 1; i++) {
+        const emptySeatUser = {
+            email: "emptySeat@fillme.com",
+            password: "",
+            isFake: true
+        }
+        totalUsers.push(emptySeatUser)
+    }
+
     // create a table
     const table = new Table({
         title: req.body.title || "you aint name this table",
         deck: req.body.deck,
         seats: req.body.seats,
-        users: [req.body.users[0]]
+        users: totalUsers
     })
 
     table.save()
