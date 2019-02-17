@@ -99,7 +99,7 @@ const findOne = (req, res) => {
 }
 
 // update a table based on the tableId
-const update = (req, res) => {
+const updateTableDeck = (req, res) => {
     if ( !req.body.deck ) {
         return res.status(400).send({
             message: "table deck cannot be empty"
@@ -111,26 +111,59 @@ const update = (req, res) => {
     }, {
         new: true
     })
-        .then(table => {
-            if ( !table ) {
-                return res.status(404).send({
-                    message: "couldnt find table with id: " + req.params.tableId
-                })
-            }
-            res.send(table)
-        })
-        .catch(err => {
-            if( err.kind == 'ObjectId' ) {
-                return res.status(404).send({
-                    message: "couldnt find table with id: " + req.params.tableId
-                })
-            }
-
-            return res.status(500).send({
-                message: "fucked up updating table with id: " + req.params.tableId + ": "
+    .then(table => {
+        if ( !table ) {
+            return res.status(404).send({
+                message: "couldnt find table with id: " + req.params.tableId
             })
+        }
+        res.send(table)
+    })
+    .catch(err => {
+        if( err.kind == 'ObjectId' ) {
+            return res.status(404).send({
+                message: "couldnt find table with id: " + req.params.tableId
+            })
+        }
+
+        return res.status(500).send({
+            message: "fucked up updating table with id: " + req.params.tableId + ": "
         })
-    
+    })  
+}
+
+// update a table based on the tableId
+const updateTableUsers = (req, res) => {
+    if ( !req.body.users ) {
+        return res.status(400).send({
+            message: "table users cannot be empty"
+        })
+    }
+
+    Table.findByIdAndUpdate(req.params.tableId, {
+        users: req.body.users
+    }, {
+        new: true
+    })
+    .then(table => {
+        if ( !table ) {
+            return res.status(404).send({
+                message: "couldnt find table with id: " + req.params.tableId
+            })
+        }
+        res.send(table)
+    })
+    .catch(err => {
+        if( err.kind == 'ObjectId' ) {
+            return res.status(404).send({
+                message: "couldnt find table with id: " + req.params.tableId
+            })
+        }
+
+        return res.status(500).send({
+            message: "fucked up updating table with id: " + req.params.tableId + ": "
+        })
+    })  
 }
 
 // delete table based on tableId
@@ -158,10 +191,12 @@ const deleteTable = (req, res) => {
         })
 }
 
+
 module.exports = {
     create,
     deleteTable,
-    update,
+    updateTableDeck,
+    updateTableUsers,
     findOne,
     findAll
 }

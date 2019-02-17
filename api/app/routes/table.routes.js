@@ -10,9 +10,13 @@ module.exports = app => {
     // get a single table with tableId
     app.get('/tables/:tableId', tables.findOne)
 
-    // update a table with tableId
-    app.put('/tables/:tableId', tables.update)
+    // update a deck for a table with tableId
+    app.put('/tables/:tableId/deck', tables.updateTableDeck)
+
+    // update users for a table with tableId
+    app.put('/tables/:tableId/users', tables.updateTableUsers)
 
     // delete a table with tableId
     app.delete('/tables/:tableId', tables.deleteTable)
+
 }

@@ -1,6 +1,6 @@
 import { FETCH_SINGLE_TABLE_FAILURE, FETCH_SINGLE_TABLE_SUCCESS, FETCH_SINGLE_TABLE_REQUEST } from '../actions/fetchTableById'
 import { SEND_SHUFFLED_DECK_TO_TABLE_SUCCESS, SEND_SHUFFLED_DECK_TO_TABLE_FAILURE, SEND_SHUFFLED_DECK_TO_TABLE_REQUEST } from '../actions/shuffleAndDeal'
-
+import { UPDATE_TABLE_USERS_SUCCESS } from '../actions/updateTableUsers'
 const initialState = {
     loading: true,
     table: {},
@@ -31,6 +31,7 @@ export const singleTable = (state = initialState, action) => {
 
         case FETCH_SINGLE_TABLE_SUCCESS:
         case SEND_SHUFFLED_DECK_TO_TABLE_SUCCESS:
+        case UPDATE_TABLE_USERS_SUCCESS:
             stateObj = {
                 loading: false,
                 error: null,

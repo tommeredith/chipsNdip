@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { setUserInStorageAction } from './userInStorage'
+import { setUserInStorage } from './userInStorage'
 
 export const CREATE_USER_REQUEST = "CREATE_USER_REQUEST"
 export const CREATE_USER_FAILURE = "CREATE_USER_FAILURE"
