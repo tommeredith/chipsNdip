@@ -1,8 +1,9 @@
 const bodyParser = require('body-parser')
 const express = require('express')
 const dbConfig = require('./config/database.config.js');
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 const cors = require('cors')
+const io = require('socket.io')()
 
 mongoose.Promise = global.Promise;
 
@@ -16,6 +17,8 @@ mongoose.connect(dbConfig.url, {
 })
 
 const app = express()
+const port = 1234
+const socketPort = 2345
 
 app.use(cors())
 
@@ -33,6 +36,24 @@ require('./app/routes/table.routes.js')(app);
 // bring in user routes
 require('./app/routes/user.routes.js')(app)
 
-app.listen(1234, () => {
-    console.log("i'm hearing you on 1234")
+var players = {}
+
+io.on('connection', client => {
+    players[client.id] = true
+    io.sockets.emit('connected_players', _.size(players));
+    
+    // client.on('subscribeToTimer', interval => {
+    //     console.log('client is subscribing to timer with interval ', interval)
+
+    //     setInterval(() => {
+    //         client.emit('timer', new Date())
+    //     }, interval)
+    // })
+})
+
+io.listen(socketPort)
+console.log('socket listening on ' + socketPort)
+
+app.listen(port, () => {
+    console.log("i'm hearing you on " + port)
 })

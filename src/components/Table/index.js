@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import lifecycle from 'react-pure-lifecycle'
 import { connect } from 'react-redux'
 import { fetchTableById } from '../../actions/fetchTableById'
 import { shuffleAndDeal } from '../../actions/shuffleAndDeal'
 import { deleteTable } from '../../actions/deleteTable'
 import { claimSeat } from '../../actions/claimSeat'
+import { subscribeToTimer } from '../../socket/timer'
 
 const lifecycleMethods = {
     componentWillMount({ match, grabSingleTable }){
@@ -31,6 +32,15 @@ const renderUsers = (users, authedUser, table, claimSeat) => {
 }
 
 const Table = ({ singleTable, shuffleAndDeal, deleteTable, authedUser, claimSeat }) => {
+    
+    const [timestamp, setTimestamp] = useState(null)
+
+    console.log(timestamp)
+
+    subscribeToTimer((err, timestamp) => {
+        setTimestamp(timestamp)
+    })
+
     const { _id, deck, users, seats } = singleTable
 
     return (
