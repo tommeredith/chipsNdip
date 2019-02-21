@@ -4,6 +4,7 @@ const dbConfig = require('./config/database.config.js');
 const mongoose = require('mongoose')
 const cors = require('cors')
 const io = require('socket.io')()
+const _ = require('underscore')
 
 mongoose.Promise = global.Promise;
 
@@ -39,9 +40,21 @@ require('./app/routes/user.routes.js')(app)
 var players = {}
 
 io.on('connection', client => {
+
+    // JUST FOR KEEPING TRACK OF CURRENT SESSIONS
     players[client.id] = true
     io.sockets.emit('connected_players', _.size(players));
+    console.log('PLAYERS: ', players)
+
+    client.on('disconnect', () => {
+        delete players[client.id]
+        console.log('player ' + client.id + ' disconnected')
+    })
+
+
+    // CHAT MESSAGES
     
+
     // client.on('subscribeToTimer', interval => {
     //     console.log('client is subscribing to timer with interval ', interval)
 

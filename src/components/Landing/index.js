@@ -7,21 +7,28 @@ const Landing = ({ createUser, loginUser }) => {
 
     const [userEmail, setUserEmail] = useState('')
     const [userPassword, setUserPassword] = useState('')
+    const [username, setUsername] = useState('')
     const [isSignUp, toggleIsSignUp] = useState(false)
     
     return (
         <section>
             <div>
                 {isSignUp ? (
-                    <p>
-                        Gotta sign up
-                    </p>
+                    <div>
+                        <p>
+                            Gotta sign up
+                        </p>
+                        <p>
+                            username
+                        </p>
+                        <input type="text" onChange={(e) => setUsername(e.target.value)} />
+                    </div>
                 ) : (
                     <p>
                         Gotta log in
                     </p>
                 )}
-
+               
                 <p>
                     email
                 </p>
@@ -31,7 +38,7 @@ const Landing = ({ createUser, loginUser }) => {
                 </p>
                 <input type="password" onChange={(e) => setUserPassword(e.target.value)}/>
                 {isSignUp ? (
-                    <button onClick={() => createUser(userEmail, userPassword)}>click it, ya bitch</button>
+                    <button onClick={() => createUser(userEmail, userPassword, username)}>click it, ya bitch</button>
                 ) : (
                     <button onClick={() => loginUser(userEmail, userPassword)}>click it, ya bitch</button>
                 )}
@@ -47,7 +54,7 @@ const Landing = ({ createUser, loginUser }) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-    createUser: (email, password) => dispatch(createUser(email, password)),
+    createUser: (email, password, username) => dispatch(createUser(email, password, username)),
     loginUser: (email, password) => dispatch(loginUser(email, password))
 })
 

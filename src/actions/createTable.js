@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { updateUserAssociatedTables } from './updateUserAssociatedTables'
 
-
 export const CREATE_TABLE_REQUEST = "CREATE_TABLE_REQUEST"
 export const CREATE_TABLE_SUCCESS = "CREATE_TABLE_SUCCESS"
 export const CREATE_TABLE_FAILURE = "CREATE_TABLE_FAILURE"

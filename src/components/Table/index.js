@@ -17,12 +17,13 @@ const renderUsers = (users, authedUser, table, claimSeat) => {
     if (!users) {
         return
     }
-
+    console.log(authedUser.associatedTables)
+    console.log(table._id)
     return users.map((user, index) => {
         const availableSeat = user.isFake && !authedUser.associatedTables.includes(table._id)
         return (
             <div>
-                <p>{user.email}</p>
+                <p>{user.username}</p>
                 {availableSeat && (
                     <button onClick={() => claimSeat(users, table._id, authedUser, index)}>claim seat</button>
                 )}
@@ -32,14 +33,14 @@ const renderUsers = (users, authedUser, table, claimSeat) => {
 }
 
 const Table = ({ singleTable, shuffleAndDeal, deleteTable, authedUser, claimSeat }) => {
-    
-    const [timestamp, setTimestamp] = useState(null)
+    const [trashTalkMessage, setTrashTalkMessage] = useState('')
+    // const [timestamp, setTimestamp] = useState(null)
 
-    console.log(timestamp)
+    // console.log(timestamp)
 
-    subscribeToTimer((err, timestamp) => {
-        setTimestamp(timestamp)
-    })
+    // subscribeToTimer((err, timestamp) => {
+    //     setTimestamp(timestamp)
+    // })
 
     const { _id, deck, users, seats } = singleTable
 
@@ -52,6 +53,12 @@ const Table = ({ singleTable, shuffleAndDeal, deleteTable, authedUser, claimSeat
             {renderUsers(users, authedUser, singleTable, claimSeat)}
 
             <button onClick={() => deleteTable(_id)}>delete table</button>
+
+            <h2>Talk that shit, ya queers</h2>
+
+
+            <input type="text" onChange={(e) => setTrashTalkMessage(e.target.value)} />
+            <button>Spout your shit</button>
         </section>
     )
 }

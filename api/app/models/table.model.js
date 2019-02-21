@@ -11,6 +11,7 @@ const TableSchema = mongoose.Schema({
     users: [
         {
             email: String,
+            username: String,
             password: String,
             isFake: {type: Boolean, default: false},
             _id: String

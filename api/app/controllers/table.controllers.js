@@ -37,6 +37,7 @@ const create = (req, res) => {
         const emptySeatUser = {
             email: "emptySeat@fillme.com",
             password: "",
+            username: "emptySeat",
             isFake: true
         }
         totalUsers.push(emptySeatUser)

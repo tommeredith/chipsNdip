@@ -15,11 +15,18 @@ const create = (req, res) => {
         })
     }
 
+    if ( !req.body.username ) {
+        return res.status(400).send({
+            message: "username can't be empty"
+        })
+    }
+
     // create a user
     const user = new User({
         email: req.body.email,
         password: req.body.password,
-        associatedTables: []
+        associatedTables: [],
+        username: req.body.username
     })
 
     user.save()

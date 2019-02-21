@@ -19,7 +19,7 @@ export const createUserSuccess = user => ({
     payload: { user }
 })
 
-export const createUser = (email, password) => {
+export const createUser = (email, password, username) => {
 
 
     return dispatch => {
@@ -27,7 +27,8 @@ export const createUser = (email, password) => {
 
         axios.post('http://localhost:1234/users', { 
             "email": email,
-            "password": password
+            "password": password,
+            "username": username
         })
         .then(user => {
             dispatch(createUserSuccess(user))
