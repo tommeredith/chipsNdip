@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import _ from 'underscore'
 import lifecycle from 'react-pure-lifecycle'
 import { connect } from 'react-redux'
 import { fetchTableById } from '../../actions/fetchTableById'
@@ -6,6 +7,7 @@ import { shuffleAndDeal } from '../../actions/shuffleAndDeal'
 import { deleteTable } from '../../actions/deleteTable'
 import { claimSeat } from '../../actions/claimSeat'
 import { subscribeToTimer } from '../../socket/timer'
+import { talkShitEmit, talkShitSubscribe } from '../../socket/shitTalk'
 
 const lifecycleMethods = {
     componentWillMount({ match, grabSingleTable }){
@@ -17,8 +19,7 @@ const renderUsers = (users, authedUser, table, claimSeat) => {
     if (!users) {
         return
     }
-    console.log(authedUser.associatedTables)
-    console.log(table._id)
+
     return users.map((user, index) => {
         const availableSeat = user.isFake && !authedUser.associatedTables.includes(table._id)
         return (
@@ -33,7 +34,8 @@ const renderUsers = (users, authedUser, table, claimSeat) => {
 }
 
 const Table = ({ singleTable, shuffleAndDeal, deleteTable, authedUser, claimSeat }) => {
-    const [trashTalkMessage, setTrashTalkMessage] = useState('')
+    const [shitTalkMessages, setShitTalkMessages] = useState([])
+    const [indivShitTalkMessage, setIndivShitTalkMessage] = useState('')
     // const [timestamp, setTimestamp] = useState(null)
 
     // console.log(timestamp)
@@ -41,6 +43,27 @@ const Table = ({ singleTable, shuffleAndDeal, deleteTable, authedUser, claimSeat
     // subscribeToTimer((err, timestamp) => {
     //     setTimestamp(timestamp)
     // })
+
+    talkShitSubscribe((talkShitMessage) => {
+        setShitTalkMessages([
+            ...shitTalkMessages,
+            {
+                username: talkShitMessage.username,
+                message: talkShitMessage.message
+            }
+        ])
+    })
+
+    const addShitTalkMessage = (username, message) => {
+        setShitTalkMessages([
+            ...shitTalkMessages,
+            {
+                username,
+                message
+            }
+        ])
+        talkShitEmit(authedUser, message)
+    }
 
     const { _id, deck, users, seats } = singleTable
 
@@ -55,10 +78,16 @@ const Table = ({ singleTable, shuffleAndDeal, deleteTable, authedUser, claimSeat
             <button onClick={() => deleteTable(_id)}>delete table</button>
 
             <h2>Talk that shit, ya queers</h2>
-
-
-            <input type="text" onChange={(e) => setTrashTalkMessage(e.target.value)} />
-            <button>Spout your shit</button>
+            
+            {!_.isEmpty(shitTalkMessages) && (
+                <ul>
+                    {shitTalkMessages.map(message => (
+                        <li>{message.username}: {message.message}</li>
+                    ))}
+                </ul>
+            )}
+            <input type="text" onChange={(e) => setIndivShitTalkMessage(e.target.value)} />
+            <button onClick={() => addShitTalkMessage(authedUser.username, indivShitTalkMessage)}>Spout your shit</button>
         </section>
     )
 }

@@ -54,6 +54,11 @@ io.on('connection', client => {
 
     // CHAT MESSAGES
     
+    client.on('talk_shit', (message) => {
+        console.log('message: ', message)
+
+        io.sockets.emit('shit_talked', message)
+    })
 
     // client.on('subscribeToTimer', interval => {
     //     console.log('client is subscribing to timer with interval ', interval)
