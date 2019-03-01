@@ -19,4 +19,9 @@ module.exports = app => {
     // delete a table with tableId
     app.delete('/tables/:tableId', tables.deleteTable)
 
+    // update table chat
+    app.put('/tables/:tableId/chat', tables.updateTableChat)
+
+    // delete table chat
+    app.put('/tables/:tableId/chat/delete', tables.deleteTableChat)
 }

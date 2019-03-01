@@ -5,6 +5,10 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 const io = require('socket.io')()
 const _ = require('underscore')
+const winston = require('winston')
+const expressWinston = require('express-winston')
+
+require('winston-loggly-bulk')
 
 mongoose.Promise = global.Promise;
 
@@ -23,9 +27,28 @@ const socketPort = 2345
 
 app.use(cors())
 
+// winston logging to loggly
+// dont need for developement but good to have
+
+// app.use(expressWinston.logger({
+//     transports: [
+//         new winston.transports.Console({
+//             json: true,
+//             colorize: true
+//         }),
+//         new winston.transports.Loggly({
+//             subdomain: 'tommeredith.loggly.com',
+//             inputToken: 'aa3352c9-96ae-42da-8eb4-5be6d3354d16',
+//             json: true,
+//             tags: ["NodeJS-Express"]
+//         })
+//     ]
+// }));
+
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.use(bodyParser.json())
+
 
 app.get('/', (req, res) => {
     res.json({"message": "all kinds of shit happening up in here"})

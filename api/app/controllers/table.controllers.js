@@ -167,6 +167,33 @@ const updateTableUsers = (req, res) => {
     })  
 }
 
+const deleteTableChat = (req, res) => {
+    Table.findByIdAndUpdate(req.params.tableId, {
+        shitTalkMessages: []
+    }, {
+        new: true
+    })
+    .then(table => {
+        if ( !table ) {
+            return res.status(404).send({
+                message: "couldnt find table with id: " + req.params.tableId
+            })
+        }
+        res.send(table)
+    })
+    .catch(err => {
+        if( err.kind == 'ObjectId' ) {
+            return res.status(404).send({
+                message: "couldnt find table with id: " + req.params.tableId
+            })
+        }
+
+        return res.status(500).send({
+            message: "fucked up updating table with id: " + req.params.tableId + ": "
+        })
+    })
+}
+
 // delete table based on tableId
 const deleteTable = (req, res) => {
     Table.findByIdAndDelete(req.params.tableId)
@@ -192,6 +219,40 @@ const deleteTable = (req, res) => {
         })
 }
 
+// update table chat when user submits chat message
+const updateTableChat = (req, res) => {
+    if ( !req.body.shitTalkMessages ) {
+        return res.status(400).send({
+            message: "table messages cannot be empty"
+        })
+    }
+
+    Table.findByIdAndUpdate(req.params.tableId, {
+        shitTalkMessages: req.body.shitTalkMessages
+    }, {
+        new: true
+    })
+    .then(table => {
+        if ( !table ) {
+            return res.status(404).send({
+                message: "couldn't find table with id: " + req.params.tableId
+            })
+        }
+        res.send(table)
+    })
+    .catch(err => {
+        if( err.kind == 'ObjectId' ) {
+            return res.status(404).send({
+                message: "couldnt find table with id: " + req.params.tableId
+            })
+        }
+
+        return res.status(500).send({
+            message: "fucked up updating table with id: " + req.params.tableId + ": "
+        })
+    })
+}
+
 
 module.exports = {
     create,
@@ -199,5 +260,7 @@ module.exports = {
     updateTableDeck,
     updateTableUsers,
     findOne,
-    findAll
+    findAll,
+    updateTableChat,
+    deleteTableChat
 }

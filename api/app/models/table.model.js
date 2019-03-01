@@ -8,6 +8,12 @@ const TableSchema = mongoose.Schema({
         suit: String,
         rank: String    
     }],
+    shitTalkMessages: [
+        {
+            username: String,
+            message: String
+        }
+    ],
     users: [
         {
             email: String,
