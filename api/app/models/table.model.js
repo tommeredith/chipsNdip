@@ -20,6 +20,7 @@ const TableSchema = mongoose.Schema({
             username: String,
             password: String,
             isFake: {type: Boolean, default: false},
+            hand: [{rank: String, suit: String}],
             _id: String
         }
     ]

@@ -5,7 +5,8 @@ export const CREATE_TABLE_REQUEST = "CREATE_TABLE_REQUEST"
 export const CREATE_TABLE_SUCCESS = "CREATE_TABLE_SUCCESS"
 export const CREATE_TABLE_FAILURE = "CREATE_TABLE_FAILURE"
 
-const buildDeck = () => {
+
+export const buildDeck = () => {
     const deck = []
     const suits = ["spades", "hearts", "clubs", "diamonds"]
     

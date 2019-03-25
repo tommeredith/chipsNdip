@@ -13,6 +13,9 @@ module.exports = app => {
     // update a deck for a table with tableId
     app.put('/tables/:tableId/deck', tables.updateTableDeck)
 
+    // update a deck for a table with tableId
+    app.put('/tables/:tableId/deck/reset', tables.resetTableDeck)
+
     // update users for a table with tableId
     app.put('/tables/:tableId/users', tables.updateTableUsers)
 
@@ -24,4 +27,7 @@ module.exports = app => {
 
     // delete table chat
     app.put('/tables/:tableId/chat/delete', tables.deleteTableChat)
+
+    // shuffle deck and deal hands to users
+    app.put('/tables/:tableId/deal', tables.shuffleAndDeal)
 }

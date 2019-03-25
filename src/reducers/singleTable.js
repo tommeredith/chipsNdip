@@ -1,6 +1,8 @@
 import { FETCH_SINGLE_TABLE_FAILURE, FETCH_SINGLE_TABLE_SUCCESS, FETCH_SINGLE_TABLE_REQUEST } from '../actions/fetchTableById'
-import { SEND_SHUFFLED_DECK_TO_TABLE_SUCCESS, SEND_SHUFFLED_DECK_TO_TABLE_FAILURE, SEND_SHUFFLED_DECK_TO_TABLE_REQUEST } from '../actions/shuffleAndDeal'
+import { SHUFFLE_DECK_AND_DEAL_SUCCESS, SHUFFLE_DECK_AND_DEAL_FAILURE, SHUFFLE_DECK_AND_DEAL_REQUEST } from '../actions/shuffleAndDeal'
 import { UPDATE_TABLE_USERS_SUCCESS } from '../actions/updateTableUsers'
+import { RESET_DECK_REQUEST, RESET_DECK_SUCCESS, RESET_DECK_FAILURE } from '../actions/resetDeck'
+
 const initialState = {
     loading: true,
     table: {},
@@ -12,7 +14,8 @@ export const singleTable = (state = initialState, action) => {
 
     switch (action.type) {
         case FETCH_SINGLE_TABLE_REQUEST:
-        case SEND_SHUFFLED_DECK_TO_TABLE_REQUEST:
+        case SHUFFLE_DECK_AND_DEAL_REQUEST:
+        case RESET_DECK_REQUEST:
             stateObj = {
                 loading: true,
                 error: null,
@@ -21,7 +24,8 @@ export const singleTable = (state = initialState, action) => {
             return stateObj
 
         case FETCH_SINGLE_TABLE_FAILURE:
-        case SEND_SHUFFLED_DECK_TO_TABLE_FAILURE:
+        case SHUFFLE_DECK_AND_DEAL_FAILURE:
+        case RESET_DECK_FAILURE:
             stateObj = {
                 loading: false,
                 error: action.payload.error,
@@ -30,8 +34,9 @@ export const singleTable = (state = initialState, action) => {
             return stateObj
 
         case FETCH_SINGLE_TABLE_SUCCESS:
-        case SEND_SHUFFLED_DECK_TO_TABLE_SUCCESS:
+        case SHUFFLE_DECK_AND_DEAL_SUCCESS:
         case UPDATE_TABLE_USERS_SUCCESS:
+        case RESET_DECK_SUCCESS:
             stateObj = {
                 loading: false,
                 error: null,

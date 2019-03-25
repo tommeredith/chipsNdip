@@ -108,7 +108,8 @@ const updateTableDeck = (req, res) => {
     }
 
     Table.findByIdAndUpdate(req.params.tableId, {
-        deck: req.body.deck
+        deck: req.body.deck,
+        users: req.body.users
     }, {
         new: true
     })
@@ -131,6 +132,40 @@ const updateTableDeck = (req, res) => {
             message: "fucked up updating table with id: " + req.params.tableId + ": "
         })
     })  
+}
+
+const resetTableDeck = (req, res) => {
+    if ( !req.body.deck ) {
+        return res.status(400).send({
+            message: "table deck cannot be empty"
+        })
+    }
+
+    Table.findByIdAndUpdate(req.params.tableId, {
+        deck: req.body.deck,
+        users: req.body.users
+    }, {
+        new: true
+    })
+    .then(table => {
+        if ( !table ) {
+            return res.status(404).send({
+                message: "couldnt find table with id: " + req.params.tableId
+            })
+        }
+        res.send(table)
+    })
+    .catch(err => {
+        if( err.kind == 'ObjectId' ) {
+            return res.status(404).send({
+                message: "couldnt find table with id: " + req.params.tableId
+            })
+        }
+
+        return res.status(500).send({
+            message: "fucked up updating table with id: " + req.params.tableId + ": "
+        })
+    }) 
 }
 
 // update a table based on the tableId
@@ -253,6 +288,36 @@ const updateTableChat = (req, res) => {
     })
 }
 
+const shuffleAndDeal = (req, res) => {
+
+    Table.findByIdAndUpdate(req.params.tableId, {
+        deck: req.body.deck,
+        users: req.body.users
+    }, {
+        new: true
+    })
+    .then(table => {
+        if ( !table ) {
+            return res.status(404).send({
+                message: "couldn't find table with id: " + req.params.tableId
+            })
+        }
+        
+        res.send(table)
+    })
+    .catch(err => {
+        if( err.kind == 'ObjectId' ) {
+            return res.status(404).send({
+                message: "couldnt find table with id: " + req.params.tableId
+            })
+        }
+
+        return res.status(500).send({
+            message: "fucked up updating table with id: " + req.params.tableId + ": "
+        })
+    })
+}
+
 
 module.exports = {
     create,
@@ -262,5 +327,7 @@ module.exports = {
     findOne,
     findAll,
     updateTableChat,
-    deleteTableChat
+    deleteTableChat,
+    shuffleAndDeal,
+    resetTableDeck
 }

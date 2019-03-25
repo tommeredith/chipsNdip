@@ -1,44 +1,46 @@
 import _ from 'underscore'
 import axios from 'axios'
+import { buildDeck } from './createTable'
 
 export const SHUFFLE_DECK = "SHUFFLE_DECK"
-export const SEND_SHUFFLED_DECK_TO_TABLE_REQUEST = "SEND_SHUFFLED_DECK_TO_TABLE_REQUEST"
-export const SEND_SHUFFLED_DECK_TO_TABLE_SUCCESS = "SEND_SHUFFLED_DECK_TO_TABLE_SUCCESS"
-export const SEND_SHUFFLED_DECK_TO_TABLE_FAILURE = "SEND_SHUFFLED_DECK_TO_TABLE_FAILURE"
+export const SHUFFLE_DECK_AND_DEAL_REQUEST = "SHUFFLE_DECK_AND_DEAL_REQUEST"
+export const SHUFFLE_DECK_AND_DEAL_SUCCESS = "SHUFFLE_DECK_AND_DEAL_SUCCESS"
+export const SHUFFLE_DECK_AND_DEAL_FAILURE = "SHUFFLE_DECK_AND_DEAL_FAILURE"
 
 
-const shuffleDeck = deck => {
+export const shuffleDeck = deck => {
     return _.shuffle(deck)
 }
 
-const sendShuffledDeckToTableRequest = () => ({
-    type: SEND_SHUFFLED_DECK_TO_TABLE_REQUEST
+const shuffleDeckAndDealRequest = () => ({
+    type: SHUFFLE_DECK_AND_DEAL_REQUEST
 })
 
-const sendShuffledDeckToTableSuccess = table => ({
-    type: SEND_SHUFFLED_DECK_TO_TABLE_SUCCESS,
+const shuffleDeckAndDealSuccess = table => ({
+    type: SHUFFLE_DECK_AND_DEAL_SUCCESS,
     payload: { table }
 })
 
-const sendShuffledDeckToTableFailure = error => ({
-    type: SEND_SHUFFLED_DECK_TO_TABLE_FAILURE,
+const shuffleDeckAndDealFailure = error => ({
+    type: SHUFFLE_DECK_AND_DEAL_FAILURE,
     payload: { error }
 })
 
-export const shuffleAndDeal = (tableId, deck) => {
-    let shuffledDeck = shuffleDeck(deck)
+export const shuffleAndDeal = (tableId, users, deck) => {
+
     return dispatch => {
         
-        dispatch(sendShuffledDeckToTableRequest())
+        dispatch(shuffleDeckAndDealRequest())
 
-        axios.put("http://localhost:1234/tables/" + tableId, {
-            deck: shuffledDeck
+        axios.put("http://localhost:1234/tables/" + tableId + "/deal", {
+            deck,
+            users
         })
         .then(table => {
-            dispatch(sendShuffledDeckToTableSuccess(table))
+            dispatch(shuffleDeckAndDealSuccess(table))
         })
         .catch(error => {
-            dispatch(sendShuffledDeckToTableFailure(error))
+            dispatch(shuffleDeckAndDealFailure(error))
         })
     }
 }

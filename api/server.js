@@ -83,6 +83,22 @@ io.on('connection', client => {
         io.sockets.emit('shit_talked', message)
     })
 
+    // DEAL CARDS
+
+    client.on('deal_hand', (users, deck) => {
+        console.log('dealt users: ', users)
+
+        io.sockets.emit('hand_dealt', users, deck)
+    })
+
+    // RESET DECK
+
+    client.on('reset_deck', (users, deck) => {
+        console.log('deck reset')
+
+        io.sockets.emit('deck_reset_emission', users, deck)
+    })
+
     // client.on('subscribeToTimer', interval => {
     //     console.log('client is subscribing to timer with interval ', interval)
 
