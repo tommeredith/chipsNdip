@@ -1,0 +1,16 @@
+language: node_js
+node_js:
+  - "stable"
+cache:
+  directories:
+  - node_modules
+script:
+  - npm run cypress:run
+# deploy:
+#   provider: heroku
+#   api_key:
+#     secure: "4b3ee1cf-f3ef-4376-9dea-15301a0f8e80"
+# notifications:
+#   slack:
+#     rooms:
+#       - loveslackbaby:J2aeVOtwPScWXCGUhwwV3mqP#test

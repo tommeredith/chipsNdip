@@ -16,7 +16,7 @@ const Home = ({ fetchAllTables, allTables, createTable, authedUser }) => {
         )
     })
     return (
-        <div>
+        <div data-cy-home-wrap data-cy-user-id={authedUser._id}>
             <p>create new table:</p>
             <input onChange={(e) => setTableInputValue(e.target.value)} type="text"/>
             <p># of seats</p>

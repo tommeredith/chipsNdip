@@ -29,13 +29,16 @@
     "dev": "webpack-dev-server",
     "build-watch": "webpack -p -w",
     "server": "node server",
-    "build-and-serve": "webpack -p -w && node server"
+    "build-and-serve": "webpack -p -w && node server",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-loader": "^8.0.4",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
+    "cypress": "^3.2.0",
     "eslint": "^5.15.1",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-standard": "^12.0.0",

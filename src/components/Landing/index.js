@@ -21,7 +21,7 @@ const Landing = ({ createUser, loginUser }) => {
                         <p>
                             username
                         </p>
-                        <input type="text" onChange={(e) => setUsername(e.target.value)} />
+                        <input type="text" data-cy-username onChange={(e) => setUsername(e.target.value)} />
                     </div>
                 ) : (
                     <p>
@@ -32,21 +32,21 @@ const Landing = ({ createUser, loginUser }) => {
                 <p>
                     email
                 </p>
-                <input type="text" onChange={(e) => setUserEmail(e.target.value)}/>
+                <input type="text" data-cy-email onChange={(e) => setUserEmail(e.target.value)}/>
                 <p>
                     password
                 </p>
-                <input type="password" onChange={(e) => setUserPassword(e.target.value)}/>
+                <input type="password" data-cy-password onChange={(e) => setUserPassword(e.target.value)}/>
                 {isSignUp ? (
-                    <button onClick={() => createUser(userEmail, userPassword, username)}>click it, ya bitch</button>
+                    <button data-cy-sign-up-button onClick={() => createUser(userEmail, userPassword, username)}>click it, ya bitch</button>
                 ) : (
-                    <button onClick={() => loginUser(userEmail, userPassword)}>click it, ya bitch</button>
+                    <button data-cy-log-in-button onClick={() => loginUser(userEmail, userPassword)}>click it, ya bitch</button>
                 )}
                 
                 {isSignUp ? (
-                    <button onClick={() => toggleIsSignUp(false)}>finna log in?</button>
+                    <button data-cy-log-in-toggle onClick={() => toggleIsSignUp(false)}>finna log in?</button>
                 ) : (
-                    <button onClick={() => toggleIsSignUp(true)}>finna sign up?</button>
+                    <button data-cy-sign-up-toggle onClick={() => toggleIsSignUp(true)}>finna sign up?</button>
                 )}
             </div>
         </section>
