@@ -2,7 +2,7 @@
 
 describe("log in a user", function(){
     it("loads the landing page", function(){
-        cy.visit("http://localhost:8081")
+        cy.visit("https://chips-n-dip.herokuapp.com/")
     })
 
     context('logs in', function(){

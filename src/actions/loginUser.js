@@ -46,7 +46,7 @@ export const loginUser = (email, password) => {
         // THIS NEEDS TO BE CHANGED TO HANDLE A POST REQUEST WITH THE USER
         // AND PASSWORD TO FIND A USER ON THE BACKEND RATHER THAN WHAT YOU'RE
         // DOING HERE
-        axios.post('http://localhost:1234/users/login', {
+        axios.post('https://chips-n-dip-api.herokuapp.com/users/login', {
             email,
             password 
         })

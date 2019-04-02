@@ -23,7 +23,7 @@ export const fetchTables = () => {
     return dispatch => {
         dispatch(fetchTablesRequest())
 
-        axios.get('http://localhost:1234/tables')
+        axios.get('https://chips-n-dip-api.herokuapp.com/tables')
             .then(tables => {
                 dispatch(fetchTablesSuccess(tables))
             })

@@ -23,7 +23,7 @@ export const resetDeck = (tableId, users, deck) => {
     return dispatch => {
         dispatch(resetDeckRequest())
 
-        axios.put('http://localhost:1234/tables/' + tableId + '/deck', {
+        axios.put('https://chips-n-dip-api.herokuapp.com/tables/' + tableId + '/deck', {
             deck,
             users
         })

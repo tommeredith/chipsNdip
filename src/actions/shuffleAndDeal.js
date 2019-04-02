@@ -32,7 +32,7 @@ export const shuffleAndDeal = (tableId, users, deck) => {
         
         dispatch(shuffleDeckAndDealRequest())
 
-        axios.put("http://localhost:1234/tables/" + tableId + "/deal", {
+        axios.put("https://chips-n-dip-api.herokuapp.com/tables/" + tableId + "/deal", {
             deck,
             users
         })

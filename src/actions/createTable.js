@@ -66,7 +66,7 @@ export const createTable = (tableName, tableSeats, user) => {
     return dispatch => {
         dispatch(createTableRequest())
 
-        axios.post('http://localhost:1234/tables', { 
+        axios.post('https://chips-n-dip-api.herokuapp.com/tables', { 
                 "title": tableName,
                 "deck": deck,
                 "users": usersArr,

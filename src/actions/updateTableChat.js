@@ -24,7 +24,7 @@ export const updateTableChat = (tableId, shitTalkMessages) => {
     return dispatch => {
         dispatch(updateTableChatRequest())
 
-        axios.put('http://localhost:1234/tables/' + tableId + '/chat', {
+        axios.put('https://chips-n-dip-api.herokuapp.com/tables/' + tableId + '/chat', {
             shitTalkMessages
         })
         .then(table => {

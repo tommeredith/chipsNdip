@@ -25,7 +25,7 @@ export const updateUserAssociatedTables = (userId, tableId) => {
     return dispatch => {
         dispatch(updateUserAssociatedTablesRequest())
 
-        axios.put('http://localhost:1234/users/' + userId + '/updateAssociatedTable', {
+        axios.put('https://chips-n-dip-api.herokuapp.com/users/' + userId + '/updateAssociatedTable', {
             tableId
         })
         .then(user => {

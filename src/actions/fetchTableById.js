@@ -23,7 +23,7 @@ export const fetchTableById = tableId => {
     return dispatch => {
         dispatch(fetchSingleTableRequest())
 
-        axios.get('http://localhost:1234/tables/' + tableId)
+        axios.get('https://chips-n-dip-api.herokuapp.com/tables/' + tableId)
             .then(table => {
                 dispatch(fetchSingleTableSuccess(table))
             })

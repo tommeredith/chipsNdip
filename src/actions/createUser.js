@@ -25,7 +25,7 @@ export const createUser = (email, password, username) => {
     return dispatch => {
         dispatch(createUserRequest())
 
-        axios.post('http://localhost:1234/users', { 
+        axios.post('https://chips-n-dip-api.herokuapp.com/users', { 
             "email": email,
             "password": password,
             "username": username

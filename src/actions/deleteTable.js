@@ -23,7 +23,7 @@ export const deleteTable = tableId => {
     return dispatch => {
         dispatch(deleteTableRequest())
 
-        axios.delete('http://localhost:1234/tables/' + tableId)
+        axios.delete('https://chips-n-dip-api.herokuapp.com/tables/' + tableId)
         .then(() => {
             dispatch(deleteTableSuccess(tableId))
         })
