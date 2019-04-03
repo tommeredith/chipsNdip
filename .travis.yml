@@ -5,7 +5,7 @@ cache:
   directories:
   - node_modules
 script:
-  - yarn cypress:run
+  - npm run cypress:run
 # deploy:
 #   provider: heroku
 #   api_key:
