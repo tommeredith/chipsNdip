@@ -6,11 +6,8 @@ cache:
   - node_modules
 script:
   - npm run cypress:run
-# deploy:
-#   provider: heroku
-#   api_key:
-#     secure: "4b3ee1cf-f3ef-4376-9dea-15301a0f8e80"
-# notifications:
-#   slack:
-#     rooms:
-#       - loveslackbaby:J2aeVOtwPScWXCGUhwwV3mqP#test
+deploy:
+  provider: heroku
+  api_key:
+    secure: "ViamoEadgLALVyzPySvGAYKnG4pWfXSTrneFyOv8nGtf4ckrdnK5rNZlhmmV4De9HpMdr2WiZJS11onQzOb/ctBmyqvaFplcpPYAmGGj3K+KbCqxWo2k3j+we57jnAOH+SGN2Bl4xnCBopb2olHusXQbfHtF9eLLBu8V93B0I2SSvqj6IcGcxFirCH+SfFslKJvAY4K8VFg1g/AC1pR66qQpA0RpCfkFntINLMiVoAxetZ/yaMFF6bwOUhkpVVN6pOsFY84xArRPyl/b1Nac/qvdFRYECacWzgvLB6wEmRI1e0ftxkAW2llnJPG9cd4Zwhj4W/kkjlVqYGzwMmt6BtqXqzlIM8Dm5OwTdo9+B2HQuKioQrbIqSFtxZmOXoPVI2/jlGp4DlItB9jvm+WY/hhjIINhXCB7A3r4S0elftc6rEFeMOQvExYkcmy7agKSugR9Ci1Uvw/GZRbC5FUOtjSj8ZWsrA3WEqrNievlPDZXqNw4HzEhZOfNsfoHPa1IZSDg6TZeXksU/sHk+kF1Z0JIQ6oh4623DKFs9euMB1r72MhM9eHBVAXx+ces0GmF7fCqlgH+1Z/g0VK9CLNb3JuJ8/jin5Xq4N2onYiad9sdQaykfToJAKHQUWNKU+AFJhR5i7mskAbe8RwKIhl7G4EmGAzZbk1fl8QcdixVVk8="
+
