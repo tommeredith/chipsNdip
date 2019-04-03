@@ -1,8 +1,8 @@
 {
-  "name": "swampThang",
+  "name": "chipsNdip",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "git@github.com:tommeredith/swampThang.git",
+  "repository": "git@github.com:tommeredith/chipsNdip.git",
   "author": "Tom Meredith <tommeredith01@gmail.com>",
   "license": "MIT",
   "dependencies": {
