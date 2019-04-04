@@ -7,7 +7,7 @@ cache:
     - node_modules
     - ~/.cache
 script:
-- npm run cypress:run
+  - npm run cypress:run
 deploy:
   provider: heroku
   api_key:
