@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { URI } from './constants'
 
 export const FETCH_SINGLE_TABLE_REQUEST = "FETCH_SINGLE_TABLE_REQUEST"
 export const FETCH_SINGLE_TABLE_SUCCESS = "FETCH_SINGLE_TABLE_SUCCESS"
@@ -23,7 +24,7 @@ export const fetchTableById = tableId => {
     return dispatch => {
         dispatch(fetchSingleTableRequest())
 
-        axios.get('https://chips-n-dip-api.herokuapp.com/tables/' + tableId)
+        axios.get(URI + 'tables/' + tableId)
             .then(table => {
                 dispatch(fetchSingleTableSuccess(table))
             })

@@ -1,6 +1,7 @@
 import _ from 'underscore'
 import axios from 'axios'
 import { buildDeck } from './createTable'
+import { URI } from './constants'
 
 export const SHUFFLE_DECK = "SHUFFLE_DECK"
 export const SHUFFLE_DECK_AND_DEAL_REQUEST = "SHUFFLE_DECK_AND_DEAL_REQUEST"
@@ -32,7 +33,7 @@ export const shuffleAndDeal = (tableId, users, deck) => {
         
         dispatch(shuffleDeckAndDealRequest())
 
-        axios.put("https://chips-n-dip-api.herokuapp.com/tables/" + tableId + "/deal", {
+        axios.put(URI + 'tables/' + tableId + "/deal", {
             deck,
             users
         })

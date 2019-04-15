@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { URI } from './constants'
 
 export const RESET_DECK_REQUEST = "RESET_DECK_REQUEST"
 export const RESET_DECK_SUCCESS = "RESET_DECK_SUCCESS"
@@ -23,7 +24,7 @@ export const resetDeck = (tableId, users, deck) => {
     return dispatch => {
         dispatch(resetDeckRequest())
 
-        axios.put('https://chips-n-dip-api.herokuapp.com/tables/' + tableId + '/deck', {
+        axios.put(URI + 'tables/' + tableId + '/deck', {
             deck,
             users
         })

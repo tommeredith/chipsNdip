@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { URI } from './constants'
 
 export const DELETE_TABLE_REQUEST = "DELETE_TABLE_REQUEST"
 export const DELETE_TABLE_FAILURE = "DELETE_TABLE_FAILURE"
@@ -23,7 +24,7 @@ export const deleteTable = tableId => {
     return dispatch => {
         dispatch(deleteTableRequest())
 
-        axios.delete('https://chips-n-dip-api.herokuapp.com/tables/' + tableId)
+        axios.delete(URI + 'tables/' + tableId)
         .then(() => {
             dispatch(deleteTableSuccess(tableId))
         })

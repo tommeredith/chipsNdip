@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { URI } from './constants'
 
 export const FETCH_TABLES_REQUEST = "FETCH_TABLES_REQUEST"
 export const FETCH_TABLES_SUCCESS = "FETCH_TABLES_SUCCESS"
@@ -23,7 +24,7 @@ export const fetchTables = () => {
     return dispatch => {
         dispatch(fetchTablesRequest())
 
-        axios.get('https://chips-n-dip-api.herokuapp.com/tables')
+        axios.get(URI + 'tables')
             .then(tables => {
                 dispatch(fetchTablesSuccess(tables))
             })

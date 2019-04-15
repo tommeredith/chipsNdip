@@ -1,5 +1,6 @@
 import axios from 'axios'
-import { hardResetUserInStorage } from './userInStorage';
+import { hardResetUserInStorage } from './userInStorage'
+import { URI } from './constants'
 
 export const UPDATE_USER_ASSOCIATED_TABLES_REQUEST = "UPDATE_USER_ASSOCIATED_TABLES_REQUEST"
 export const UPDATE_USER_ASSOCIATED_TABLES_SUCCESS = "UPDATE_USER_ASSOCIATED_TABLES_SUCCESS"
@@ -25,7 +26,7 @@ export const updateUserAssociatedTables = (userId, tableId) => {
     return dispatch => {
         dispatch(updateUserAssociatedTablesRequest())
 
-        axios.put('https://chips-n-dip-api.herokuapp.com/users/' + userId + '/updateAssociatedTable', {
+        axios.put(URI + 'users/' + userId + '/updateAssociatedTable', {
             tableId
         })
         .then(user => {

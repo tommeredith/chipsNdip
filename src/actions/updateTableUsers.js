@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { URI } from './constants'
 
 export const UPDATE_TABLE_USERS_REQUEST = "UPDATE_TABLE_USERS_REQUEST"
 export const UPDATE_TABLE_USERS_SUCCESS = "UPDATE_TABLE_USERS_SUCCESS"
@@ -24,7 +25,7 @@ export const updateTableUsers = (users, tableId, authedUser) => {
     return dispatch => {
         dispatch(updateTableUsersRequest())
 
-        axios.put('https://chips-n-dip-api.herokuapp.com/tables/' + tableId + '/users', {
+        axios.put(URI + 'tables/' + tableId + '/users', {
             users,
             authedUser
         })

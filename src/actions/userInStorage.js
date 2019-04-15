@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { URI } from './constants'
 
 export const GET_USER_IN_STORAGE = "GET_USER_IN_STORAGE"
 export const SET_USER_IN_STORAGE = "SET_USER_IN_STORAGE"
@@ -34,7 +35,7 @@ export const getUserInStorage = () => {
 export const hardResetUserInStorage = userId => {
     
     return dispatch => {
-        axios.get('https://chips-n-dip-api.herokuapp.com/users/' + userId)
+        axios.get(URI + 'users/' + userId)
         .then(user => {
             console.log('user in hardResetUserInStorage: ', user)
             localStorage.setItem('chipDipUser', JSON.stringify(user))

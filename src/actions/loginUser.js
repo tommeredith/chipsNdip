@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { setUserInStorage } from './userInStorage'
+import { URI } from './constants'
 
 export const LOGIN_USER_REQUEST = "LOGIN_USER_REQUEST"
 export const LOGIN_USER_FAILURE = "LOGIN_USER_FAILURE"
@@ -46,7 +47,7 @@ export const loginUser = (email, password) => {
         // THIS NEEDS TO BE CHANGED TO HANDLE A POST REQUEST WITH THE USER
         // AND PASSWORD TO FIND A USER ON THE BACKEND RATHER THAN WHAT YOU'RE
         // DOING HERE
-        axios.post('https://chips-n-dip-api.herokuapp.com/users/login', {
+        axios.post(URI + 'users/login', {
             email,
             password 
         })

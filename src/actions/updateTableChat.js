@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { URI } from './constants'
 
 export const UPDATE_TABLE_CHAT_REQUEST = "UPDATE_TABLE_CHAT_REQUEST"
 export const UPDATE_TABLE_CHAT_SUCCESS = "UPDATE_TABLE_CHAT_SUCCESS"
@@ -24,7 +25,7 @@ export const updateTableChat = (tableId, shitTalkMessages) => {
     return dispatch => {
         dispatch(updateTableChatRequest())
 
-        axios.put('https://chips-n-dip-api.herokuapp.com/tables/' + tableId + '/chat', {
+        axios.put(URI + 'tables/' + tableId + '/chat', {
             shitTalkMessages
         })
         .then(table => {

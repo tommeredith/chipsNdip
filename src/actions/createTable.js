@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { updateUserAssociatedTables } from './updateUserAssociatedTables'
-
+import { URI } from './constants'
+ 
 export const CREATE_TABLE_REQUEST = "CREATE_TABLE_REQUEST"
 export const CREATE_TABLE_SUCCESS = "CREATE_TABLE_SUCCESS"
 export const CREATE_TABLE_FAILURE = "CREATE_TABLE_FAILURE"
@@ -66,7 +67,7 @@ export const createTable = (tableName, tableSeats, user) => {
     return dispatch => {
         dispatch(createTableRequest())
 
-        axios.post('https://chips-n-dip-api.herokuapp.com/tables', { 
+        axios.post(URI + 'tables', { 
                 "title": tableName,
                 "deck": deck,
                 "users": usersArr,

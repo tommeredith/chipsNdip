@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { setUserInStorage } from './userInStorage'
+import { URI } from './constants'
 
 export const CREATE_USER_REQUEST = "CREATE_USER_REQUEST"
 export const CREATE_USER_FAILURE = "CREATE_USER_FAILURE"
@@ -25,7 +26,7 @@ export const createUser = (email, password, username) => {
     return dispatch => {
         dispatch(createUserRequest())
 
-        axios.post('https://chips-n-dip-api.herokuapp.com/users', { 
+        axios.post(URI + 'users', { 
             "email": email,
             "password": password,
             "username": username
