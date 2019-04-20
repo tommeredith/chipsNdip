@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { fetchTables } from '../../actions/fetchTables'
 import { createTable } from '../../actions/createTable'
+import { removeUserInStorage } from '../../actions/userInStorage';
 
-const Home = ({ fetchAllTables, allTables, createTable, authedUser }) => {
+const Home = ({ fetchAllTables, allTables, createTable, authedUser, signOutUser }) => {
     const [newTableInputValue, setTableInputValue] = useState('')
     const [newTableSeats, setNewTableSeats] = useState('2')
 
@@ -17,8 +18,8 @@ const Home = ({ fetchAllTables, allTables, createTable, authedUser }) => {
     })
     return (
         <div data-cy-home-wrap data-cy-user-id={authedUser._id}>
-            <h3>Welcome back, {authedUser.username}</h3>
-
+            <h3>Welcome back, {authedUser.username}  <button onClick={() => signOutUser(authedUser)}>logout</button></h3>
+           
             <p>create new table:</p>
             <input onChange={(e) => setTableInputValue(e.target.value)} type="text"/>
             <p># of seats</p>
@@ -47,7 +48,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     fetchAllTables: () => dispatch(fetchTables()),
-    createTable: (tableInput, tableSeats, currentUser) => dispatch(createTable(tableInput, tableSeats, currentUser))
+    createTable: (tableInput, tableSeats, currentUser) => dispatch(createTable(tableInput, tableSeats, currentUser)),
+    signOutUser: () => dispatch(removeUserInStorage())
 })
  
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

@@ -1,6 +1,6 @@
 import { CREATE_USER_REQUEST, CREATE_USER_SUCCESS, CREATE_USER_FAILURE } from '../actions/createUser'
 import { LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE } from '../actions/loginUser'
-import { SET_USER_IN_STORAGE, GET_USER_IN_STORAGE } from '../actions/userInStorage'
+import { SET_USER_IN_STORAGE, GET_USER_IN_STORAGE, REMOVE_USER_IN_STORAGE } from '../actions/userInStorage'
 import { UPDATE_USER_ASSOCIATED_TABLES_SUCCESS } from '../actions/updateUserAssociatedTables'
 
 const initialState = {
@@ -16,6 +16,7 @@ export const user = (state = initialState, action) => {
     switch (action.type) {
         case CREATE_USER_REQUEST:
         case LOGIN_USER_REQUEST:
+        case REMOVE_USER_IN_STORAGE:
             userObj = {
                 loading: true,
                 user: {},

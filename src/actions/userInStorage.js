@@ -3,6 +3,7 @@ import { URI } from './constants'
 
 export const GET_USER_IN_STORAGE = "GET_USER_IN_STORAGE"
 export const SET_USER_IN_STORAGE = "SET_USER_IN_STORAGE"
+export const REMOVE_USER_IN_STORAGE = "REMOVE_USER_IN_STORAGE"
 
 export const getUserInStorageAction = user => ({
     type: GET_USER_IN_STORAGE,
@@ -11,6 +12,11 @@ export const getUserInStorageAction = user => ({
 
 export const setUserInStorageAction = user => ({
     type: SET_USER_IN_STORAGE,
+    payload: { user }
+})
+
+export const removeUserInStorageAction = user => ({
+    type: REMOVE_USER_IN_STORAGE,
     payload: { user }
 })
 
@@ -41,7 +47,14 @@ export const hardResetUserInStorage = userId => {
             localStorage.setItem('chipDipUser', JSON.stringify(user))
             dispatch(setUserInStorageAction(user))
         })
+    }   
+}
+
+export const removeUserInStorage = user => {
+
+    localStorage.removeItem('chipDipUser')
+
+    return dispatch => {
+        dispatch(removeUserInStorageAction(user))
     }
-   
-    
 }
