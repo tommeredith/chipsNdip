@@ -22,11 +22,13 @@
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-react": "^7.12.4",
     "eslint-plugin-standard": "^4.0.0",
+    "fela": "^10.2.4",
     "html-webpack-plugin": "^3.2.0",
     "path": "^0.12.7",
     "prettier": "1.16.4",
     "react": "^16.8.0-alpha.1",
     "react-dom": "^16.8.0-alpha.1",
+    "react-fela": "^10.2.4",
     "react-pure-lifecycle": "^3.0.0",
     "react-redux": "^6.0.0",
     "react-router-dom": "^4.3.1",
@@ -46,6 +48,12 @@
     "server": "node server",
     "build-and-serve": "webpack -p -w && node server",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
+    "cypress:run": "cypress run",
+    "build-css": "node-sass --include-path scss assets/scss/index.scss dist/css/main.css",
+    "watch-css": "nodemon -e scss -x \"npm run build-css\""
+  },
+  "devDependencies": {
+    "node-sass": "^4.12.0",
+    "nodemon": "^1.19.0"
   }
 }

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import TableLayout from './TableLayout'
 import _ from 'underscore'
 import lifecycle from 'react-pure-lifecycle'
 import { connect } from 'react-redux'
@@ -19,46 +20,14 @@ const lifecycleMethods = {
     }
 }
 
-const renderUsers = (users, authedUser, table, claimSeat) => {
-    if (!users) {
-        return
-    }
-
-    return users.map((user, index) => {
-        const availableSeat = user.isFake && !authedUser.associatedTables.includes(table._id)
-        return (
-            <div>
-                <p>{user.username}</p>
-                {availableSeat && (
-                    <button onClick={() => claimSeat(users, table._id, authedUser, index)}>claim seat</button>
-                )}
-            </div>
-        )
-    })
-}
-
 const renderShitTalk = (messages, localMessages) => {
     const allShitTalkMessages = messages.concat(localMessages)
     return (
         <ul>
-            {allShitTalkMessages.map(message => (
-                <li>{message.username}: {message.message}</li>
+            {allShitTalkMessages.map((message, index) => (
+                <li key={index}>{message.username}: {message.message}</li>
             ))}
         </ul>
-    )
-}
-
-const renderHand = hand => {
-   if ( !hand ) {
-       return
-   }
-
-    return (
-        <p>
-            {hand.map(card => (
-                <span>{card.rank} of {card.suit}</span>
-            ))}
-        </p>
     )
 }
 
@@ -76,6 +45,16 @@ const Table = ({ singleTable, shuffleAndDeal, deleteTable, authedUser, claimSeat
     const { _id, seats } = singleTable
     const users = tableUsers
     const deck = tableDeck
+
+    let isUserAllowedToFuckAround = false,
+        tableIsFull = tableUsers.filter(user => user.isFake).length == 0
+
+
+    tableUsers.map(user => {
+        if (user._id == authedUser._id ) {
+            isUserAllowedToFuckAround = true
+        }
+    })
 
     resetDeckSubscribe((users, deck) => {
         setTableUsers(users)
@@ -139,22 +118,20 @@ const Table = ({ singleTable, shuffleAndDeal, deleteTable, authedUser, claimSeat
         updateTableChat(singleTable._id, singleTable.shitTalkMessages.concat(updatedShitTalkMessages))
     }
 
-    
-    
-    const userAtTable = users && users.find(user => {
-        return user._id == authedUser._id
-    })
-
     return (
         <section>
             <h2>Table: {singleTable.title}</h2>
             <h4>Player: {authedUser.username}</h4>
-            <h5>Current Hand:</h5>
-            {userAtTable && renderHand(userAtTable.hand)}
-            <button onClick={() => shuffleAndDealEmission(_id, users, deck)}>shuffle and deal</button>
-            <button onClick={() => resetDeckEmission(_id, users)}>reset deck</button>
-            {renderUsers(users, authedUser, singleTable, claimSeat)}
-           
+
+            {(isUserAllowedToFuckAround && tableIsFull) && (
+                <div>
+                    <button onClick={() => shuffleAndDealEmission(_id, users, deck)}>shuffle and deal</button>
+                    <button onClick={() => resetDeckEmission(_id, users)}>reset deck</button>
+                </div>
+            )}
+            
+            
+            <TableLayout table={singleTable} />
             <h2>Talk that shit, ya queers</h2>
             
             {renderShitTalk(singleTable.shitTalkMessages, shitTalkMessages) }

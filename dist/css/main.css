@@ -1,0 +1,42 @@
+.table {
+  display: block;
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  width: 12em;
+  height: 12em;
+  margin: -2em;
+  border-radius: 100%;
+  background: black; }
+  .table .user {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 4em;
+    height: 4em;
+    margin: -2em;
+    border-radius: 100%; }
+    .table .user.seat1_2 {
+      transform: rotate(90deg) translate(9em) rotate(-90deg); }
+    .table .user.seat1_3 {
+      transform: rotate(0deg) translate(9em) rotate(0deg); }
+    .table .user.seat1_4 {
+      transform: rotate(0deg) translate(9em) rotate(-45deg); }
+    .table .user.seat2_2 {
+      transform: rotate(270deg) translate(9em) rotate(-270deg); }
+    .table .user.seat2_3 {
+      transform: rotate(120deg) translate(9em) rotate(-120deg); }
+    .table .user.seat2_4 {
+      transform: rotate(90deg) translate(9em) rotate(-90deg); }
+    .table .user.seat3_3 {
+      transform: rotate(240deg) translate(9em) rotate(-240deg); }
+    .table .user.seat3_4 {
+      transform: rotate(180deg) translate(9em) rotate(-180deg); }
+    .table .user.seat4_4 {
+      transform: rotate(270deg) translate(9em) rotate(-270deg); }
+  .table .hand {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: -6em; }
