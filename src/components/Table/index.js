@@ -13,6 +13,7 @@ import { talkShitEmit, talkShitSubscribe } from '../../socket/shitTalk'
 import { dealHandEmit, dealHandSubscribe } from '../../socket/dealHand'
 import { resetDeckEmit, resetDeckSubscribe } from '../../socket/resetDeck'
 import { updateTableChat } from '../../actions/updateTableChat'
+import { dealSharedCards } from '../../actions/dealSharedCards'
 
 const lifecycleMethods = {
     componentWillMount({ match, grabSingleTable }){
@@ -31,7 +32,35 @@ const renderShitTalk = (messages, localMessages) => {
     )
 }
 
-const Table = ({ singleTable, shuffleAndDeal, deleteTable, authedUser, claimSeat, updateTableChat, resetDeck }) => {
+const renderSharedCardButton = (table, deck, dealSharedCards) => {
+    if ( !table || (table.flopShown & table.turnShown & table.riverShown) ) {
+        return
+    }
+
+    let buttonText = '',
+        buttonStage = ''
+        
+    if ( !table.flopShown ) {
+        buttonText = 'hit me with that flop, pimpin',
+        buttonStage = 'flopShown'
+
+    }
+    if ( table.flopShown & !table.turnShown ) {
+        buttonText = 'how about we try that turn'
+        buttonStage = 'turnShown'
+    }
+
+    if ( table.flopShown & table.turnShown & !table.riverShown ) {
+        buttonText = 'now gimme that sweet sweet river'
+        buttonStage = 'riverShown'
+    }
+
+    return(
+        <button onClick={() => dealSharedCards(table, deck, buttonStage)}>{buttonText}</button>
+    )
+}
+
+const Table = ({ singleTable, shuffleAndDeal, deleteTable, authedUser, claimSeat, updateTableChat, resetDeck, dealSharedCards }) => {
 
     if ( _.isEmpty(singleTable) ) {
         return <div></div>
@@ -116,7 +145,7 @@ const Table = ({ singleTable, shuffleAndDeal, deleteTable, authedUser, claimSeat
         talkShitEmit(authedUser, message)
 
         updateTableChat(singleTable._id, singleTable.shitTalkMessages.concat(updatedShitTalkMessages))
-    }
+    }   
 
     return (
         <section>
@@ -125,7 +154,10 @@ const Table = ({ singleTable, shuffleAndDeal, deleteTable, authedUser, claimSeat
 
             {(isUserAllowedToFuckAround && tableIsFull) && (
                 <div>
-                    <button onClick={() => shuffleAndDealEmission(_id, users, deck)}>shuffle and deal</button>
+                    {!singleTable.handsBeenDealt ? 
+                        <button onClick={() => shuffleAndDealEmission(_id, users, deck)}>shuffle and deal</button> :
+                        renderSharedCardButton(singleTable, deck, dealSharedCards)
+                    }
                     <button onClick={() => resetDeckEmission(_id, users)}>reset deck</button>
                 </div>
             )}
@@ -152,7 +184,8 @@ const mapDispatchToProps = dispatch => ({
     deleteTable: tableId => dispatch(deleteTable(tableId)),
     claimSeat: (users, tableId, authedUser, seatIndex) => dispatch(claimSeat(users, tableId, authedUser, seatIndex)),
     updateTableChat: (tableId, messages) => dispatch(updateTableChat(tableId, messages)),
-    resetDeck: (tableId, users, deck) => dispatch(resetDeck(tableId, users, deck))
+    resetDeck: (tableId, users, deck) => dispatch(resetDeck(tableId, users, deck)),
+    dealSharedCards: (table, deck, sharedCardSection) => dispatch(dealSharedCards(table, deck, sharedCardSection))
 })
 
 const mapStateToProps = state => ({

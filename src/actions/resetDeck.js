@@ -24,7 +24,7 @@ export const resetDeck = (tableId, users, deck) => {
     return dispatch => {
         dispatch(resetDeckRequest())
 
-        axios.put(URI + 'tables/' + tableId + '/deck', {
+        axios.put(URI + 'tables/' + tableId + '/deck/reset', {
             deck,
             users
         })

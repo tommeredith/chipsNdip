@@ -143,7 +143,12 @@ const resetTableDeck = (req, res) => {
 
     Table.findByIdAndUpdate(req.params.tableId, {
         deck: req.body.deck,
-        users: req.body.users
+        users: req.body.users,
+        sharedCards: [],
+        handsBeenDealt: false,
+        flopShown: false,
+        turnShown: false,
+        riverShown: false
     }, {
         new: true
     })
@@ -292,7 +297,39 @@ const shuffleAndDeal = (req, res) => {
 
     Table.findByIdAndUpdate(req.params.tableId, {
         deck: req.body.deck,
-        users: req.body.users
+        users: req.body.users,
+        handsBeenDealt: true
+    }, {
+        new: true
+    })
+    .then(table => {
+        if ( !table ) {
+            return res.status(404).send({
+                message: "couldn't find table with id: " + req.params.tableId
+            })
+        }
+        
+        res.send(table)
+    })
+    .catch(err => {
+        if( err.kind == 'ObjectId' ) {
+            return res.status(404).send({
+                message: "couldnt find table with id: " + req.params.tableId
+            })
+        }
+
+        return res.status(500).send({
+            message: "fucked up updating table with id: " + req.params.tableId + ": "
+        })
+    })
+}
+
+const addSharedCards = (req, res) => {
+
+    Table.findByIdAndUpdate(req.params.tableId, {
+        sharedCards: req.body.sharedCards,
+        deck: req.body.deck,
+        [req.body.sharedCardSection]: true
     }, {
         new: true
     })
@@ -329,5 +366,6 @@ module.exports = {
     updateTableChat,
     deleteTableChat,
     shuffleAndDeal,
-    resetTableDeck
+    resetTableDeck,
+    addSharedCards
 }

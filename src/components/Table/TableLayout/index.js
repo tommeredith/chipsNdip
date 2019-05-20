@@ -33,7 +33,26 @@ const renderHand = hand => {
              ))}
         </div>
      )
- }
+}
+
+const renderSharedCards = sharedCards => {
+    if ( !sharedCards ) {
+        return 
+    }
+
+    return (
+        <div className="table-shared-cards">
+            <h3>
+                Shared Cards
+            </h3>
+            {
+                sharedCards.map((card, index) => (
+                    <p key={index}>{card.rank} of {card.suit}</p>
+                ))
+            }
+        </div>
+    )
+}
 
 const TableLayout = ({ table, authedUser, claimSeat }) => {
    const { users } = table
@@ -42,7 +61,7 @@ const TableLayout = ({ table, authedUser, claimSeat }) => {
     const userAtTable = users && users.find(user => {
         return user._id == authedUser._id
     })
-
+    console.log('table', table)
     return (
         <section className='table-wrap'>
             <div className='table'>
@@ -54,7 +73,7 @@ const TableLayout = ({ table, authedUser, claimSeat }) => {
                 </div>
                 
             </div>
-        
+            {table.sharedCards && renderSharedCards(table.sharedCards)}
         </section>
         
     )
