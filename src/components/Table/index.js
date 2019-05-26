@@ -76,8 +76,9 @@ const Table = ({ singleTable, shuffleAndDeal, deleteTable, authedUser, claimSeat
     const deck = tableDeck
 
     let isUserAllowedToFuckAround = false,
-        tableIsFull = tableUsers.filter(user => user.isFake).length == 0
-
+        tableIsFull = tableUsers.filter(user => user.isFake).length == 0,
+        tableIsReady = tableUsers.filter(user => user.isReady).length == tableUsers.length,
+        waitingForOtherUsersToBeReady = !tableIsReady && tableUsers.find(user => user._id === authedUser._id).isReady
 
     tableUsers.map(user => {
         if (user._id == authedUser._id ) {
@@ -145,14 +146,14 @@ const Table = ({ singleTable, shuffleAndDeal, deleteTable, authedUser, claimSeat
         talkShitEmit(authedUser, message)
 
         updateTableChat(singleTable._id, singleTable.shitTalkMessages.concat(updatedShitTalkMessages))
-    }   
+    }
 
     return (
         <section>
             <h2>Table: {singleTable.title}</h2>
             <h4>Player: {authedUser.username}</h4>
 
-            {(isUserAllowedToFuckAround && tableIsFull) && (
+            {(isUserAllowedToFuckAround && tableIsFull && tableIsReady) && (
                 <div>
                     {!singleTable.handsBeenDealt ? 
                         <button onClick={() => shuffleAndDealEmission(_id, users, deck)}>shuffle and deal</button> :
@@ -161,6 +162,16 @@ const Table = ({ singleTable, shuffleAndDeal, deleteTable, authedUser, claimSeat
                     <button onClick={() => resetDeckEmission(_id, users)}>reset deck</button>
                 </div>
             )}
+
+            {
+                waitingForOtherUsersToBeReady && (
+                    <div>
+                        <h5>
+                            Waiting for the other players...
+                        </h5>
+                    </div>
+                )
+            }
             
             
             <TableLayout table={singleTable} />

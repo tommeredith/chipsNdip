@@ -1,8 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { claimSeat } from '../../../actions/claimSeat'
+import { setUserToReady } from '../../../actions/setUserToReady'
 
-const renderUsers = (users, authedUser, table, claimSeat) => {
+const renderUsers = (users, authedUser, table, claimSeat, setUserToReady) => {
     if (!users) {
         return
     }
@@ -15,6 +16,9 @@ const renderUsers = (users, authedUser, table, claimSeat) => {
                 <p>{user.username}</p>
                 {availableSeat && (
                     <button onClick={() => claimSeat(users, table._id, authedUser, index)}>claim seat</button>
+                )}
+                {authedUser._id == user._id && !user.isReady && (
+                    <button onClick={() => setUserToReady(users, table._id, authedUser)}>You ready?</button>
                 )}
             </div>
         )
@@ -54,18 +58,18 @@ const renderSharedCards = sharedCards => {
     )
 }
 
-const TableLayout = ({ table, authedUser, claimSeat }) => {
+const TableLayout = ({ table, authedUser, claimSeat, setUserToReady }) => {
    const { users } = table
 
        
     const userAtTable = users && users.find(user => {
         return user._id == authedUser._id
     })
-    console.log('table', table)
+
     return (
         <section className='table-wrap'>
             <div className='table'>
-                {renderUsers(users, authedUser, table, claimSeat)}
+                {renderUsers(users, authedUser, table, claimSeat, setUserToReady)}
 
                 <div className='hand'>
                     <h3>Your Hand:</h3>
@@ -85,6 +89,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     claimSeat: (users, tableId, authedUser, seatIndex) => dispatch(claimSeat(users, tableId, authedUser, seatIndex)),
+    setUserToReady: (users, tableId, authedUser) => dispatch(setUserToReady(users, tableId, authedUser))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TableLayout)
